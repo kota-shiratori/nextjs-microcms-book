@@ -1,5 +1,11 @@
 export default function Home() {
+
+  const name = "世界";
+
   return (
-   <h1>テクノロジーの力で世界を変える</h1>
+    <div>
+      <h1>テクノロジーの力で{name}を変える</h1>
+      <p>私たちは市場をリードしているグローバルテックカンパニーです。</p>
+    </div>
   );
 }
