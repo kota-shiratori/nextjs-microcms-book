@@ -5,8 +5,16 @@ import Article from "@/app/_components/Article";
 import ButtonLink from "@/app/_components/ButtonLink";
 import styles from "./page.module.css";
 
-// 🔥 型を排除して直接書く（Next.js公式の書き方）
-export default async function Page({ params, searchParams }: any) {
+interface PageProps {
+  params: {
+    slug: string;
+  };
+  searchParams?: {
+    dk?: string;
+  };
+}
+
+export default async function Page({ params, searchParams }: PageProps) {
   const data = await getNewsDetail(params.slug, {
     draftKey: searchParams?.dk,
   }).catch(notFound);
