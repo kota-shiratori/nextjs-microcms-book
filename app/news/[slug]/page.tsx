@@ -4,10 +4,14 @@ import Article from "@/app/_components/Article";
 import ButtonLink from "@/app/_components/ButtonLink";
 import styles from "./page.module.css";
 
-export default async function Page({ params, searchParams }: { params: { slug: string }; searchParams?: { dk?: string } }) {
-  const data = await getNewsDetail(params.slug, {
-    draftKey: searchParams.dk,
-  }).catch(notFound);
+type Params = Promise<{ slug: string }>;
+type Search = Promise<{ dk?: string }>;
+
+export default async function Page(props: { params: Params; searchParams: Search }) {
+  const { slug } = await props.params;
+  const { dk } = (await props.searchParams) ?? {};
+
+  const data = await getNewsDetail(slug, { draftKey: dk }).catch(notFound);
 
   return (
     <>
