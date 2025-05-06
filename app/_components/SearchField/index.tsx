@@ -2,10 +2,14 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import styles from "./index.module.css";
 import { Suspense } from "react";
+import styles from "./index.module.css";
 
-function SearchFieldComponent() {
+type Props = {
+  defaultValue?: string;
+};
+
+function SearchFieldComponent({ defaultValue }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -23,16 +27,16 @@ function SearchFieldComponent() {
     <form onSubmit={handleSubmit} className={styles.form}>
       <label className={styles.search}>
         <Image src="/search.svg" alt="検索" width={16} height={16} loading="eager" />
-        <input type="text" name="q" defaultValue={searchParams.get("q") ?? undefined} placeholder="キーワードを入力" className={styles.searchInput} />
+        <input type="text" name="q" placeholder="キーワードを入力" defaultValue={defaultValue ?? searchParams.get("q") ?? undefined} className={styles.searchInput} />
       </label>
     </form>
   );
 }
 
-export default function SearchField() {
+export default function SearchField(props: Props) {
   return (
     <Suspense>
-      <SearchFieldComponent />
+      <SearchFieldComponent {...props} />
     </Suspense>
   );
 }
