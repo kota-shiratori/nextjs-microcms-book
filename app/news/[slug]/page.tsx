@@ -1,21 +1,15 @@
-import { notFound } from 'next/navigation';
-import { getNewsDetail } from '@/app/_libs/microcms';
-import Article from '@/app/_components/Article';
-import ButtonLink from '@/app/_components/ButtonLink';
-import styles from './page.module.css';
+// app/news/[slug]/page.tsx
 
-type Props = {
-  params: {
-    slug: string;
-  };
-  searchParams: {
-    dk?: string;
-  };
-};
+import { notFound } from "next/navigation";
+import { getNewsDetail } from "@/app/_libs/microcms";
+import Article from "@/app/_components/Article";
+import ButtonLink from "@/app/_components/ButtonLink";
+import styles from "./page.module.css";
 
-export default async function Page({ params, searchParams }: Props) {
+// ✅ 関数引数で直接型定義。かつ "export default async function Page" の形を保つ
+export default async function Page({ params, searchParams }: { params: { slug: string }; searchParams?: { dk?: string } }) {
   const data = await getNewsDetail(params.slug, {
-    draftKey: searchParams.dk,
+    draftKey: searchParams?.dk,
   }).catch(notFound);
 
   return (
